@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Qualifier("KAKAO")
@@ -36,7 +38,8 @@ public class KakaoSearchClientService implements SearchClientService<KakaoSearch
         circuitBreaker = circuitBreakerFactory.create("KAKAO_OPEN_API");
     }
 
-    protected KakaoSearchResponse callSearchApi(KakaoSearchRequest kakaoSearchRequest) {
+    @Async
+    protected CompletableFuture<KakaoSearchResponse> callSearchApi(KakaoSearchRequest kakaoSearchRequest) {
 
 
         String authorization = getAuthorization();
@@ -44,18 +47,14 @@ public class KakaoSearchClientService implements SearchClientService<KakaoSearch
         Map<String,Object> headers = new HashMap<>();
         headers.put("Authorization",authorization);
         KakaoSearchResponse result = kakaoSearchClient.search(headers,kakaoSearchRequest);
-        return result;
+        return CompletableFuture.completedFuture(result);
     }
 
     @Override
     public KakaoSearchResponse search(KakaoSearchRequest searchRequest) {
-        //circuit breaker 적용
-        KakaoSearchResponse response = circuitBreaker.run(() -> this.callSearchApi(searchRequest), throwable -> {
-            log.error(throwable.getMessage());
-            return null;
-        });
 
-        return response;
+        CompletableFuture<KakaoSearchResponse> response = this.callSearchApi(searchRequest);
+        return response.join(); // 블로킹되어 쓰레드가 결과값을 기다림. 궂이 async의 메리트를 잘 모르겠음...
     }
 
     protected String getAuthorization() {
