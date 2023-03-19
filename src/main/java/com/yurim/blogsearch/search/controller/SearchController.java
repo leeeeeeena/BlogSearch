@@ -9,7 +9,6 @@ import com.yurim.blogsearch.search.dto.SearchResponse;
 import com.yurim.blogsearch.search.service.SearchBlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,14 +21,11 @@ public class SearchController {
 
     private final SearchBlogService searchBlogService;
 
-    /**
-     * 장소 검색 API
-     */
     @GetMapping("/blog")
-    public CommonResponse searchPlace(@RequestParam(required = true) String query,
-                                      @RequestParam(defaultValue = "1",required = false) int page,
-                                      @RequestParam(defaultValue = "10",required = false) int size,
-                                      @RequestParam(required = false) SearchRequest.SORT_TYPE sort){
+    public CommonResponse<SearchResponse> searchBlog(@RequestParam(required = true) String query,
+                                     @RequestParam(defaultValue = "1",required = false) int page,
+                                     @RequestParam(defaultValue = "10",required = false) int size,
+                                     @RequestParam(required = false) SearchRequest.SORT_TYPE sort){
 
         if (StringUtils.isEmpty(query)) {
             throw new BadRequestException(ResponseCode.REQUEST_PARAMETER_MISSING);

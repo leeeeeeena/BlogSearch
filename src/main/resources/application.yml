@@ -1,5 +1,22 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+  h2:
+    console:
+      path: /h2
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
 
-
+  redis:
+    host: localhost
+    port: 6379
 
 
 client:
@@ -20,3 +37,5 @@ circuit:
   wait-duration-in-open-state: 5000 #milli seconds
   timeout-duration-second: 4 #seconds
   sliding-window-size: 2
+
+

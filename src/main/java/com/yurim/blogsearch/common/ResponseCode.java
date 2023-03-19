@@ -24,7 +24,6 @@ public enum ResponseCode {
     REQUEST_PARAMETER_NOT_ALLOWED("4302", "요청 값이 허용되지 않습니다.", HttpStatus.BAD_REQUEST),
     REQUEST_RESOURCE_NOT_FOUND("4400", "요청 대상을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
     REQUEST_RESOURCE_CONFLICT("4401", "요청 대상이 중복 되었습니다.", HttpStatus.CONFLICT),
-    REQUEST_RESOURCE_STATUS_INVALID("4402", "요청을 처리할 수 없습니다.", HttpStatus.BAD_REQUEST),
 
 
 
@@ -37,8 +36,6 @@ public enum ResponseCode {
     INTERNAL_DB_CONNECTION_TIMEOUT("5101", "DB 연결이 오래 걸립니다.", HttpStatus.SERVICE_UNAVAILABLE),
 
     INTERNAL_MW_CONNECTION_FAIL("5200", "MW 연결 실패하였습니다.", HttpStatus.SERVICE_UNAVAILABLE),
-    INTERNAL_MW_CONNECTION_TIMEOUT("5201", "MW 연결이 오래 걸립니다.", HttpStatus.SERVICE_UNAVAILABLE),
-
     INTERNAL_MW_EXECUTE_ERROR("5201", "MW의 실행 중 문제가 발생하였습니다.", HttpStatus.SERVICE_UNAVAILABLE),
 
 
@@ -53,7 +50,6 @@ public enum ResponseCode {
     CLIENT_BAD_REQUEST("6005", "요청 값이 올바르지 않습니다.", HttpStatus.BAD_REQUEST),
 
     CLIENT_CONNECTION_FAIL("6100", "연동 API 연결 실패하였습니다.", HttpStatus.SERVICE_UNAVAILABLE),
-    CLIENT_CONNECTION_TIMEOUT("6101", "연동 API 연결이 오래 걸립니다.", HttpStatus.SERVICE_UNAVAILABLE),
 
     ;
     private String code;

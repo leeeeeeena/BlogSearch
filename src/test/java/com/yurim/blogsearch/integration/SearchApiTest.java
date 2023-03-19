@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
@@ -20,15 +19,14 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //RANDOM_PORT 사용 시 실제 내장톰캣 기동
 @Tag("integration")
 public class SearchApiTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
-    public String SEARCH_PLACE_PATH = "/v1/search/blog";
+    public String SEARCH_BLOG_PATH = "/v1/search/blog";
 
     public HttpEntity httpEntity;
 
@@ -44,7 +42,7 @@ public class SearchApiTest {
     @DisplayName("정상적인 키워드 검색 요청에 대해 정상 응답")
     public void blogSearchRequestReturn200() {
 
-        String uri = SEARCH_PLACE_PATH + "?query={query}";
+        String uri = SEARCH_BLOG_PATH + "?query={query}";
         Map<String,Object> queryParams = new HashMap<>();
         queryParams.put("query","카카오");
         ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, String.class, queryParams);
@@ -58,7 +56,7 @@ public class SearchApiTest {
     @DisplayName("키워드 검색 응답이 1개 이상일 시 다음 필드를 포함하고 있어야 한다.")
     public void responseContainValues() {
 
-        String uri = SEARCH_PLACE_PATH + "?query={query}";
+        String uri = SEARCH_BLOG_PATH + "?query={query}";
         Map<String,Object> queryParams = new HashMap<>();
         queryParams.put("query","은행");
         ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, String.class, queryParams);
@@ -79,7 +77,7 @@ public class SearchApiTest {
     @DisplayName("페이징할 페이지넘버와 사이즈, sorting 방법을 정해서 요청할 수 있다")
     public void canRequestPagingAndPagingSize() {
 
-        String uri = SEARCH_PLACE_PATH + "?query={query}?page={page}&size={size}&sort={sort}";
+        String uri = SEARCH_BLOG_PATH + "?query={query}?page={page}&size={size}&sort={sort}";
         Map<String,Object> queryParams = new HashMap<>();
         queryParams.put("query","은행");
         queryParams.put("page","1");
@@ -96,7 +94,7 @@ public class SearchApiTest {
     @DisplayName("query 파라미터가 없으면 오류발생")
     public void noKeywordParamReturn400Error() {
 
-        String uri = SEARCH_PLACE_PATH + "?query={query}";
+        String uri = SEARCH_BLOG_PATH + "?query={query}";
         Map<String,Object> queryParams = new HashMap<>();
         queryParams.put("query",null);
         ResponseEntity<SearchResponse> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, SearchResponse.class, queryParams);
