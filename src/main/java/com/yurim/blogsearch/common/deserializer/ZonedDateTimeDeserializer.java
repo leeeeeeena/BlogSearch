@@ -1,4 +1,4 @@
-package com.yurim.blogsearch.common;
+package com.yurim.blogsearch.common.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

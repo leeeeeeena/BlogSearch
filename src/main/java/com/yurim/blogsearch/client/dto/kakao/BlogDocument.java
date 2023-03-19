@@ -2,7 +2,7 @@ package com.yurim.blogsearch.client.dto.kakao;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.yurim.blogsearch.common.ZonedDateTimeDeserializer;
+import com.yurim.blogsearch.common.deserializer.ZonedDateTimeDeserializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
