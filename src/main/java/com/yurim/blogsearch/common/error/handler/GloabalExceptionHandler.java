@@ -128,7 +128,7 @@ public class GloabalExceptionHandler extends ResponseEntityExceptionHandler {
      **/
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-//        return super.handleMethodArgumentNotValid(ex, headers, status, request);
+
         request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
         ResponseCode responseCode = ResponseCode.REQUEST_PARAMETER_MISSING;
         log.warn("Exception Occurred", ex);

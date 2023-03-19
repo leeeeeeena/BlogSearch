@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ResponseCode {
 
-    REQUEST_UNDEFINED_SUCCESS("2000", "요청 성공하였습니다.", HttpStatus.OK),
+    REQUEST_SUCCESS("2000", "요청 성공하였습니다.", HttpStatus.OK),
 
 
     /** 사용자 요청 오류 */
