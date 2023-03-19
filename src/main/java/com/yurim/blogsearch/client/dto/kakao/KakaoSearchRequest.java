@@ -9,7 +9,7 @@ public class KakaoSearchRequest {
 
     private String query;
 
-    private int page;
+    private int page; // 1~50
 
     private int size; // default : 10, 1~50
 

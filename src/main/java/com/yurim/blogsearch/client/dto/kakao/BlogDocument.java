@@ -1,12 +1,15 @@
 package com.yurim.blogsearch.client.dto.kakao;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.yurim.blogsearch.common.ZonedDateTimeDeserializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+
+import static com.yurim.blogsearch.common.Constants.ZONED_DATE_TIME_FORMAT;
 
 @Getter
 @NoArgsConstructor
@@ -24,8 +27,8 @@ public class BlogDocument
 
     private String thumbnail;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss.SSSXXX",iso = DateTimeFormat.ISO.DATE_TIME)
-    @JsonDeserialize(as = OffsetDateTime.class)
-    private OffsetDateTime datetime;
+    @JsonFormat(pattern = ZONED_DATE_TIME_FORMAT)
+    @JsonDeserialize(using = ZonedDateTimeDeserializer.class)
+    private ZonedDateTime datetime;
 
 }
