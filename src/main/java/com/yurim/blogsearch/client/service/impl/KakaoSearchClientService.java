@@ -4,6 +4,8 @@ import com.yurim.blogsearch.client.dto.kakao.KakaoSearchRequest;
 import com.yurim.blogsearch.client.dto.kakao.KakaoSearchResponse;
 import com.yurim.blogsearch.client.service.KakaoSearchClient;
 import com.yurim.blogsearch.client.service.SearchClientService;
+import com.yurim.blogsearch.search.dto.SearchRequest;
+import com.yurim.blogsearch.search.dto.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +22,7 @@ import java.util.Map;
 @Qualifier("KAKAO")
 @RequiredArgsConstructor
 @Slf4j
-public class KakaoSearchClientService implements SearchClientService<KakaoSearchRequest,KakaoSearchResponse> {
+public class KakaoSearchClientService implements SearchClientService {
 
     @Value("${client.kakao.api-key}")
     private String apiKey;
@@ -30,6 +32,8 @@ public class KakaoSearchClientService implements SearchClientService<KakaoSearch
     private final CircuitBreakerFactory circuitBreakerFactory;
 
     private CircuitBreaker circuitBreaker;
+
+    private final KakaoBlogResponseModifier kakaoBlogResponseModifier;
 
     @PostConstruct
     private void init() {
@@ -48,14 +52,44 @@ public class KakaoSearchClientService implements SearchClientService<KakaoSearch
     }
 
     @Override
-    public KakaoSearchResponse search(KakaoSearchRequest searchRequest) {
-        //circuit breaker 적용
-        KakaoSearchResponse response = circuitBreaker.run(() -> this.callSearchApi(searchRequest), throwable -> {
+    public SearchResponse search(SearchRequest searchRequest) {
+
+        KakaoSearchRequest kakaoSearchRequest = buildKakaoSearchRequest(searchRequest);
+
+        KakaoSearchResponse response = circuitBreaker.run(() -> this.callSearchApi(kakaoSearchRequest), throwable -> {
             log.error(throwable.getMessage());
             return null;
         });
 
-        return response;
+        SearchResponse searchResponse = kakaoBlogResponseModifier.modify(response);
+        return searchResponse;
+    }
+
+    private KakaoSearchRequest buildKakaoSearchRequest(SearchRequest searchRequest) {
+        return KakaoSearchRequest.builder()
+                .query(searchRequest.getQuery())
+                .page(searchRequest.getPage())
+                .size(searchRequest.getSize())
+                .sort(convertToKakaoSearchSortType(searchRequest))
+                .build();
+    }
+
+    private KakaoSearchRequest.SORT_TYPE convertToKakaoSearchSortType(SearchRequest searchRequest) {
+        KakaoSearchRequest.SORT_TYPE sortType = null;
+
+        if (searchRequest.getSort() == null) {
+            return null;
+        }
+
+        if (searchRequest.getSort() == SearchRequest.SORT_TYPE.accuracy) {
+            sortType = KakaoSearchRequest.SORT_TYPE.accuracy;
+        }
+
+        if (searchRequest.getSort() == SearchRequest.SORT_TYPE.recency) {
+            sortType = KakaoSearchRequest.SORT_TYPE.recency;
+        }
+
+        return sortType;
     }
 
     protected String getAuthorization() {

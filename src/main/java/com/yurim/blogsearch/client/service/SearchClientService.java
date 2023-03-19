@@ -1,8 +1,9 @@
 package com.yurim.blogsearch.client.service;
 
-import java.util.List;
+import com.yurim.blogsearch.search.dto.SearchRequest;
+import com.yurim.blogsearch.search.dto.SearchResponse;
 
-public interface SearchClientService<I,O> {
+public interface SearchClientService {
 
-    O search(I searchRequest);
+    SearchResponse search(SearchRequest searchRequest);
 }

@@ -1,10 +1,12 @@
 package com.yurim.blogsearch.client.dto.kakao;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class KakaoSearchRequest {
 
     private String query;

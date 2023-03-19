@@ -7,11 +7,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ClientType {
 
-    KAKAO("kakaoSearchClientService",0),
-    NAVER("naverSearchClientService",1),
+    KAKAO("kakaoSearchClientService"),
+    NAVER("naverSearchClientService"),
 
     ;
 
-    private String beanName;
-    private int order;
+    private String searchClientService;
 }
