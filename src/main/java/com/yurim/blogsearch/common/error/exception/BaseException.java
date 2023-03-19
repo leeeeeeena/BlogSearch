@@ -1,4 +1,4 @@
-package com.yurim.blogsearch.error.exception;
+package com.yurim.blogsearch.common.error.exception;
 
 
 import com.yurim.blogsearch.common.ResponseCode;

@@ -1,11 +1,9 @@
 package com.yurim.blogsearch.client.dto.kakao;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@NoArgsConstructor
 @ToString
 public class BlogMeta {
 

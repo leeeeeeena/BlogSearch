@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yurim.blogsearch.common.deserializer.ZonedDateTimeDeserializer;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.ZonedDateTime;
@@ -12,16 +11,15 @@ import java.time.ZonedDateTime;
 import static com.yurim.blogsearch.common.Constants.ZONED_DATE_TIME_FORMAT;
 
 @Getter
-@NoArgsConstructor
 @ToString
 public class BlogDocument
 {
 
     private String title;
 
-    private String contents;
+    private String contents; //글 요크
 
-    private String url;
+    private String url; //글 링크
 
     private String blogname;
 

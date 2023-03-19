@@ -1,5 +1,6 @@
 package com.yurim.blogsearch.client.service;
 
+import com.yurim.blogsearch.client.dto.kakao.BlogDocument;
 import com.yurim.blogsearch.client.dto.kakao.KakaoSearchRequest;
 import com.yurim.blogsearch.client.dto.kakao.KakaoSearchResponse;
 import feign.Headers;
@@ -15,6 +16,6 @@ import java.util.Map;
 public interface KakaoSearchClient {
 
     @GetMapping("${client.kakao.search-uri}")
-    KakaoSearchResponse search(@RequestHeader Map<String,Object> headers, @SpringQueryMap KakaoSearchRequest searchQuery);
+    KakaoSearchResponse<BlogDocument> search(@RequestHeader Map<String,Object> headers, @SpringQueryMap KakaoSearchRequest searchQuery);
     // spring web context 를 사용하고 있으므로, feign.HeaderMap 이 아니라 @RequestHeader 사용
 }

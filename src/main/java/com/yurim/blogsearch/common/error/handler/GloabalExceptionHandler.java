@@ -1,12 +1,12 @@
-package com.yurim.blogsearch.error.handler;
+package com.yurim.blogsearch.common.error.handler;
 
 
 import com.yurim.blogsearch.common.CommonResponse;
 import com.yurim.blogsearch.common.ResponseCode;
-import com.yurim.blogsearch.error.exception.BadRequestException;
-import com.yurim.blogsearch.error.exception.BaseException;
-import com.yurim.blogsearch.error.exception.ClientRequestException;
-import com.yurim.blogsearch.error.exception.InternalException;
+import com.yurim.blogsearch.common.error.exception.BaseException;
+import com.yurim.blogsearch.common.error.exception.BadRequestException;
+import com.yurim.blogsearch.common.error.exception.ClientRequestException;
+import com.yurim.blogsearch.common.error.exception.InternalException;
 import io.lettuce.core.RedisBusyException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.*;
