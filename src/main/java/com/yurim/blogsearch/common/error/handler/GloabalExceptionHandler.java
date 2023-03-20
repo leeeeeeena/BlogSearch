@@ -103,6 +103,40 @@ public class GloabalExceptionHandler extends ResponseEntityExceptionHandler {
     /**
      * 외부 연동 API 호출 시 발생할 수 있는 exception
      */
+
+//    @ExceptionHandler(FeignException.FeignClientException.Unauthorized.class)
+//    @Nullable
+//    public final ResponseEntity<Object> handleFeignClientUnauthorizedException(FeignException.FeignClientException.Unauthorized ex, WebRequest request) throws Exception {
+//        request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
+//        ResponseCode responseCode = ResponseCode.CLIENT_AUTHENTICATION_ERROR;
+//        log.error("Exception Occurred", ex);
+//
+//        return new ResponseEntity<>(errorResponse(responseCode, ex.getMessage()), responseCode.getHttpStatus());
+//    }
+//
+//
+//    @ExceptionHandler(FeignException.NotFound.class)
+//    @Nullable
+//    public final ResponseEntity<Object> handleFeignNotFoundException(FeignException.NotFound ex, WebRequest request) throws Exception {
+//        request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
+//        ResponseCode responseCode = ResponseCode.CLIENT_TARGET_NOT_FOUND;
+//        log.error("Exception Occurred", ex);
+//
+//        return new ResponseEntity<>(errorResponse(responseCode, ex.getMessage()), responseCode.getHttpStatus());
+//    }
+//
+//
+//    @ExceptionHandler(FeignException.FeignClientException.class)
+//    @Nullable
+//    public final ResponseEntity<Object> handleFeignClientException(FeignException.FeignClientException ex, WebRequest request) throws Exception {
+//        request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
+//        ResponseCode responseCode = ResponseCode.CLIENT_UNDEFINED_ERROR;
+//        log.error("Exception Occurred", ex);
+//
+//        return new ResponseEntity<>(errorResponse(responseCode, ex.getMessage()), responseCode.getHttpStatus());
+//    }
+
+
     @ExceptionHandler(HttpClientErrorException.class)
     public final ResponseEntity<Object> handleHttpClientErrorException(HttpClientErrorException ex, WebRequest request) throws Exception {
         request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);

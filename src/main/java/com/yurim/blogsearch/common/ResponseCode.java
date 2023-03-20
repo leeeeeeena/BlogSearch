@@ -13,8 +13,6 @@ public enum ResponseCode {
 
     /** 사용자 요청 오류 */
     REQUEST_UNDEFINED_ERROR("4000", "잘못 된 요청입니다.", HttpStatus.BAD_REQUEST),
-    REQUEST_NOT_AUTHENTICATE("4100", "인증 되지 않은 요청입니다.", HttpStatus.UNAUTHORIZED),
-
     REQUEST_BINDING_ERROR("4200", "지원하지 않는 요청입니다.", HttpStatus.BAD_REQUEST),
     REQUEST_CONTENT_TYPE_ERROR("4201", "지원하지 않는 요청입니다.", HttpStatus.BAD_REQUEST),
     REQUEST_PAYLOAD_NOT_READABLE("4202", "잘못 된 요청입니다.", HttpStatus.BAD_REQUEST),
@@ -44,7 +42,6 @@ public enum ResponseCode {
     /** 외부 API 연동 오류 */
     CLIENT_UNDEFINED_ERROR("6000", "알 수 없는 오류가 발생하였습니다.", HttpStatus.BAD_REQUEST),
     CLIENT_AUTHENTICATION_ERROR("6001", "허가 되지 않은 요청입니다.", HttpStatus.BAD_REQUEST),
-    CLIENT_REQUEST_ASSEMBLE_ERROR("6002", "외부 요청 생성에 실패하였습니다.", HttpStatus.BAD_REQUEST),
     CLIENT_TARGET_NOT_FOUND("6003", "외부 요청 대상이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
     CLIENT_NOT_SUPPORTED("6004", "지원이 되지 않는 외부 요청입니다.", HttpStatus.BAD_REQUEST),
     CLIENT_BAD_REQUEST("6005", "요청 값이 올바르지 않습니다.", HttpStatus.BAD_REQUEST),

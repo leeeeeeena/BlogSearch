@@ -29,7 +29,7 @@ spring:
 client:
   kakao:
     host: https://dapi.kakao.com
-    search-uri: /v2/search/blog
+    search-uri: /v2/search/blogFIXME
     api-key: 8598e40172eaf4f67dddd54f607a83c6
 
   naver:

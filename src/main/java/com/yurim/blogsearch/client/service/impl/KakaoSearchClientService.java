@@ -62,6 +62,7 @@ public class KakaoSearchClientService implements SearchClientService {
             return null;
         });
 
+        //FIXME null 리턴하면 nullpointexception 에러남
         SearchResponse searchResponse = kakaoBlogResponseModifier.modify(response);
         return searchResponse;
     }
