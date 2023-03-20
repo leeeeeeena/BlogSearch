@@ -1,10 +1,12 @@
 package com.yurim.blogsearch.client.dto.naver;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
+@ToString
 public class NaverSearchResponse<T> {
 
     private String lastBuildDate;

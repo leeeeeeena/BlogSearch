@@ -25,6 +25,8 @@ public class KakaoSearchClientService implements SearchClientService {
     @Value("${client.kakao.api-key}")
     private String apiKey;
 
+    private final String REQUEST_HEADER_AUTHORIZATION = "Authorization";
+
     private final KakaoSearchClient kakaoSearchClient;
     private final KakaoBlogResponseModifier kakaoBlogResponseModifier;
 
@@ -32,9 +34,9 @@ public class KakaoSearchClientService implements SearchClientService {
 
 
         String authorization = getAuthorization();
-
         Map<String,Object> headers = new HashMap<>();
-        headers.put("Authorization",authorization);
+        headers.put(REQUEST_HEADER_AUTHORIZATION,authorization);
+
         KakaoSearchResponse result = kakaoSearchClient.search(headers,kakaoSearchRequest);
         return result;
     }

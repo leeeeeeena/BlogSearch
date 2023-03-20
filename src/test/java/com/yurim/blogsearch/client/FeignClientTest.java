@@ -2,7 +2,10 @@ package com.yurim.blogsearch.client;
 
 import com.yurim.blogsearch.client.dto.kakao.KakaoSearchRequest;
 import com.yurim.blogsearch.client.dto.kakao.KakaoSearchResponse;
+import com.yurim.blogsearch.client.dto.naver.NaverSearchRequest;
+import com.yurim.blogsearch.client.dto.naver.NaverSearchResponse;
 import com.yurim.blogsearch.client.service.KakaoSearchClient;
+import com.yurim.blogsearch.client.service.NaverSearchClient;
 import com.yurim.blogsearch.common.error.exception.ClientRequestException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +30,19 @@ public class FeignClientTest {
 
     @Value("${client.kakao.api-key}")
     private String apiKey;
+
+    @Autowired
+    NaverSearchClient naverSearchClient;
+
+    @Value("${client.naver.client-id}")
+    private String clientId;
+
+    @Value("${client.naver.client-secret}")
+    private String clientSecret;
+
+    private final String NAVER_HEADER_CLIENT_ID = "X-Naver-Client-Id";
+
+    private final String NAVER_HEADER_CLIENT_SECRET = "X-Naver-Client-Secret";
 
     @Test
     @DisplayName("feign을 사용하여 kakao 블로그 검색 open api 호출")
@@ -78,5 +94,38 @@ public class FeignClientTest {
         assertThatThrownBy(() -> kakaoSearchClient.search(headers,kakaoSearchRequest)).isInstanceOf(ClientRequestException.class);
 
     }
+
+
+
+    @Test
+    @DisplayName("feign을 사용하여 naver 블로그 검색 open api 호출")
+    void callNaverBlogSearchSuccess() {
+
+        //given
+        Map<String, Object> headers = getNaverAuthHeader();
+
+        NaverSearchRequest naverSearchRequest = NaverSearchRequest.builder()
+                .query("금리")
+                .display(10)
+                .start(1)
+                .sort(NaverSearchRequest.SORT_TYPE.sim)
+                .build();
+
+        //when
+        NaverSearchResponse result = naverSearchClient.search(headers,naverSearchRequest);
+
+        //then
+        assertThat(result.toString()).contains("total");
+
+    }
+
+    Map<String,Object> getNaverAuthHeader() {
+        Map<String,Object> headers = new HashMap<>();
+        headers.put(NAVER_HEADER_CLIENT_ID,clientId);
+        headers.put(NAVER_HEADER_CLIENT_SECRET,clientSecret);
+        return headers;
+    }
+
+
 
 }
