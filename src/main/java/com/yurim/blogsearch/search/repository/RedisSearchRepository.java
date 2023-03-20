@@ -23,14 +23,14 @@ public class RedisSearchRepository implements SearchCacheRepository {
     @Override
     public void updateScore(SearchRequest searchRequest) {
 
-        redisTemplate.opsForZSet().incrementScore(buildKey(LocalDate.now()),searchRequest.getQuery(),1); //조회와 업데이트을 분리하지 않고 redis 자체 제공 함수를 사용하면 동시성 보장
+        redisTemplate.opsForZSet().incrementScore(getKey(LocalDate.now()),searchRequest.getQuery(),1); //조회와 업데이트을 분리하지 않고 redis 자체 제공 함수를 사용하면 동시성 보장
 
     }
 
     @Override
     public List<SearchCount> getRankedQueries(LocalDate targetDate, int size) { //인기검색어
 
-        Set<ZSetOperations.TypedTuple<String>> queryWithScores = redisTemplate.opsForZSet().reverseRangeWithScores(buildKey(targetDate),0,size -1);
+        Set<ZSetOperations.TypedTuple<String>> queryWithScores = redisTemplate.opsForZSet().reverseRangeWithScores(getKey(targetDate),0,size -1);
 
         if (Objects.isNull(queryWithScores)) {
             return new ArrayList<>();
@@ -46,14 +46,14 @@ public class RedisSearchRepository implements SearchCacheRepository {
     }
 
 
-    private String buildKey(LocalDate localDate) {
+    public String getKey(LocalDate localDate) {
         return String.format(REDIS_SEARCH_QUERY_KEY,localDate);
     }
 
 
     @Override
     public void expireByDate(LocalDate targetDate) {
-        redisTemplate.expire(buildKey(targetDate), 1L, TimeUnit.SECONDS);
+        redisTemplate.expire(getKey(targetDate), 1L, TimeUnit.SECONDS);
     }
 
 }

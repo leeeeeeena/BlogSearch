@@ -1,4 +1,4 @@
-package com.yurim.blogsearch.jpa;
+package com.yurim.blogsearch.repository;
 
 import com.yurim.blogsearch.search.domain.SearchHistory;
 import com.yurim.blogsearch.search.dto.SearchCount;
