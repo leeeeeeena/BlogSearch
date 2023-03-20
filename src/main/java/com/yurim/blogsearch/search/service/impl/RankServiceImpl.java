@@ -35,7 +35,6 @@ public class RankServiceImpl implements RankService {
 
         List<SearchCount> searchCounts;
         if (useCache) {
-            //TODO: redis에 데이터가 없을 경우 처리. + Redis 오류 발생시 처리
             searchCounts = searchCacheRepository.getRankedQueries(rankRequest.getSearchDate(),MAX_RANK_RESULT);
             return RankResponse.of(searchCounts);
         }
