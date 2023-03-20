@@ -10,11 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
-import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -29,17 +26,7 @@ public class KakaoSearchClientService implements SearchClientService {
     private String apiKey;
 
     private final KakaoSearchClient kakaoSearchClient;
-
-    private final CircuitBreakerFactory circuitBreakerFactory;
-
-    private CircuitBreaker circuitBreaker;
-
     private final KakaoBlogResponseModifier kakaoBlogResponseModifier;
-
-    @PostConstruct
-    private void init() {
-        circuitBreaker = circuitBreakerFactory.create("KAKAO_OPEN_API");
-    }
 
     protected KakaoSearchResponse callSearchApi(KakaoSearchRequest kakaoSearchRequest) {
 
@@ -57,10 +44,7 @@ public class KakaoSearchClientService implements SearchClientService {
 
         KakaoSearchRequest kakaoSearchRequest = buildKakaoSearchRequest(searchRequest);
 
-        KakaoSearchResponse response = circuitBreaker.run(() -> this.callSearchApi(kakaoSearchRequest), throwable -> {
-            log.error(throwable.getMessage());
-            return null;
-        });
+        KakaoSearchResponse response = this.callSearchApi(kakaoSearchRequest);
 
         //FIXME null 리턴하면 nullpointexception 에러남
         SearchResponse searchResponse = kakaoBlogResponseModifier.modify(response);

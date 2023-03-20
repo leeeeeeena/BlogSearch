@@ -3,7 +3,7 @@ package com.yurim.blogsearch.client;
 import com.yurim.blogsearch.client.dto.kakao.KakaoSearchRequest;
 import com.yurim.blogsearch.client.dto.kakao.KakaoSearchResponse;
 import com.yurim.blogsearch.client.service.KakaoSearchClient;
-import feign.FeignException;
+import com.yurim.blogsearch.common.error.exception.ClientRequestException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -75,7 +75,7 @@ public class FeignClientTest {
                 .build();
 
         //when, then
-        assertThatThrownBy(() -> kakaoSearchClient.search(headers,kakaoSearchRequest)).isInstanceOf(FeignException.FeignClientException.class);
+        assertThatThrownBy(() -> kakaoSearchClient.search(headers,kakaoSearchRequest)).isInstanceOf(ClientRequestException.class);
 
     }
 
