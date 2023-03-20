@@ -3,9 +3,11 @@ package com.yurim.blogsearch.search.service.impl;
 import com.yurim.blogsearch.search.dto.SearchCount;
 import com.yurim.blogsearch.search.dto.RankRequest;
 import com.yurim.blogsearch.search.dto.RankResponse;
+import com.yurim.blogsearch.search.repository.SearchCacheRepository;
 import com.yurim.blogsearch.search.repository.SearchHistoryRepository;
 import com.yurim.blogsearch.search.service.RankService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +24,28 @@ public class RankServiceImpl implements RankService {
     private static final int MAX_RANK_RESULT = 10;
     private final SearchHistoryRepository searchHistoryRepository;
 
+    private final SearchCacheRepository searchCacheRepository;
+
+    @Value("${infra.enable.redis}")
+    private boolean useCache;
+
     @Override
     @Transactional(readOnly = true)
     public RankResponse getTopSearchedQueries(RankRequest rankRequest) {
+
+        List<SearchCount> searchCounts;
+        if (useCache) {
+            //TODO: redis에 데이터가 없을 경우 처리. + Redis 오류 발생시 처리
+            searchCounts = searchCacheRepository.getRankedQueries(rankRequest.getSearchDate(),MAX_RANK_RESULT);
+            return RankResponse.of(searchCounts);
+        }
+
+        searchCounts = getTopSearchedQueriesByHistory(rankRequest);
+
+        return RankResponse.of(searchCounts);
+    }
+
+    private List<SearchCount> getTopSearchedQueriesByHistory(RankRequest rankRequest) {
 
         LocalDate targetDate = Optional.ofNullable(rankRequest.getSearchDate())
                 .orElse(LocalDate.now());
@@ -32,7 +53,7 @@ public class RankServiceImpl implements RankService {
         LocalDateTime endDateTime = startDateTime.plusDays(1);
         List<SearchCount> searchCounts = searchHistoryRepository.findTopHistoryByDate(startDateTime, endDateTime, PageRequest.of(0, MAX_RANK_RESULT));
 
-        return RankResponse.of(searchCounts);
+        return searchCounts;
     }
 
 }

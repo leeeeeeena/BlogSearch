@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static com.yurim.blogsearch.common.Constants.DEFAULT_DATE_FORMAT;
 
@@ -29,6 +30,8 @@ public class RankController {
                                                           @DateTimeFormat(pattern = DEFAULT_DATE_FORMAT) LocalDate searchDate) {
 
         validateRankRequest(searchDate);
+        searchDate = Optional.ofNullable(searchDate)
+                .orElse(LocalDate.now());
         RankResponse rankResponse = rankService.getTopSearchedQueries(RankRequest.of(searchDate));
         return CommonResponse.of(ResponseCode.REQUEST_SUCCESS, rankResponse);
     }

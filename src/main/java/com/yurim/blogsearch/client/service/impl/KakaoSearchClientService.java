@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @Qualifier("KAKAO")
@@ -77,7 +78,7 @@ public class KakaoSearchClientService implements SearchClientService {
     private KakaoSearchRequest.SORT_TYPE convertToKakaoSearchSortType(SearchRequest searchRequest) {
         KakaoSearchRequest.SORT_TYPE sortType = null;
 
-        if (searchRequest.getSort() == null) {
+        if (Objects.isNull(searchRequest.getSort())) {
             return null;
         }
 
