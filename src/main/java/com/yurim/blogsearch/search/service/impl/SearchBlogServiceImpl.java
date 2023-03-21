@@ -74,7 +74,6 @@ public class SearchBlogServiceImpl implements SearchBlogService {
 
     private void saveSearchQueryInCache(SearchRequest searchRequest) {
         if (useCache) {
-            //TODO: 시간 여유되면 publish, subscribe구조 적용
             searchCacheRepository.updateScore(searchRequest);
         }
     }

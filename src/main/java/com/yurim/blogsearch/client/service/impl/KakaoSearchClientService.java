@@ -51,7 +51,6 @@ public class KakaoSearchClientService implements SearchClientService {
 
         KakaoSearchResponse response = this.callSearchApi(kakaoSearchRequest);
 
-        //FIXME null 리턴하면 nullpointexception 에러남
         SearchResponse searchResponse = kakaoBlogResponseModifier.modify(response);
         return searchResponse;
     }
@@ -60,7 +59,7 @@ public class KakaoSearchClientService implements SearchClientService {
         return KakaoSearchRequest.builder()
                 .query(searchRequest.getQuery())
                 .page(searchRequest.getPage() < 1 ? DEFAULT_REQUEST_PAGE : searchRequest.getPage())
-                .size(searchRequest.getSize() < 1 ? DEFAULT_REQUEST_SIZE : searchRequest.getPage())
+                .size(searchRequest.getSize() < 1 ? DEFAULT_REQUEST_SIZE : searchRequest.getSize())
                 .sort(convertToKakaoSearchSortType(searchRequest))
                 .build();
     }
