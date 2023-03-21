@@ -11,12 +11,14 @@ import com.yurim.blogsearch.search.repository.SearchCacheRepository;
 import com.yurim.blogsearch.search.repository.SearchHistoryRepository;
 import com.yurim.blogsearch.search.service.SearchBlogService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SearchBlogServiceImpl implements SearchBlogService {
 
     private final SearchBlogRouter searchBlogRouter;
@@ -32,21 +34,58 @@ public class SearchBlogServiceImpl implements SearchBlogService {
     @Transactional
     public SearchResponse<BlogPost> search(SearchRequest searchRequest) {
 
-        SearchClientService searchClient = searchBlogRouter.getServiceByType(ClientType.KAKAO);
-        SearchResponse kakaoSearchResponse = searchClient.search(searchRequest);
+        SearchResponse searchResponse = getSearchResponse(searchRequest);
 
+        saveSearchHistory(searchRequest);
+
+        return searchResponse;
+    }
+
+
+
+    private SearchResponse getSearchResponse(SearchRequest searchRequest) {
+
+        SearchResponse searchResponse;
+        try {
+            searchResponse = getSearchResponseByClientType(searchRequest, ClientType.KAKAO);
+        } catch (Exception e) {
+            searchResponse = getSearchResponseByClientType(searchRequest, ClientType.NAVER);
+            log.error("KaKao open api 호출 에러: {}",e.getMessage());
+        }
+        return searchResponse;
+    }
+
+
+
+    private SearchResponse getSearchResponseByClientType(SearchRequest searchRequest, ClientType clientType) {
+        SearchClientService searchClient = searchBlogRouter.getServiceByType(clientType);
+        SearchResponse searchResponse = searchClient.search(searchRequest);
+        return searchResponse;
+    }
+
+
+
+    private void saveSearchHistory(SearchRequest searchRequest) {
+        saveSearchQueryInCache(searchRequest);
+        saveSearchHistoryInDB(searchRequest);
+    }
+
+
+
+    private void saveSearchQueryInCache(SearchRequest searchRequest) {
         if (useCache) {
             //TODO: 시간 여유되면 publish, subscribe구조 적용
             searchCacheRepository.updateScore(searchRequest);
         }
-        saveSearchHistory(searchRequest);
-        return kakaoSearchResponse;
     }
 
-    public void saveSearchHistory(SearchRequest searchRequest){
+
+
+    public void saveSearchHistoryInDB(SearchRequest searchRequest) {
 
         SearchHistory searchHistory = SearchHistory.of(searchRequest.getQuery());
         searchHistoryRepository.save(searchHistory);
     }
+
 
 }

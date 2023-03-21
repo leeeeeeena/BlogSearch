@@ -56,8 +56,8 @@ public class KakaoSearchClientService implements SearchClientService {
     private KakaoSearchRequest buildKakaoSearchRequest(SearchRequest searchRequest) {
         return KakaoSearchRequest.builder()
                 .query(searchRequest.getQuery())
-                .page(searchRequest.getPage())
-                .size(searchRequest.getSize())
+                .page(searchRequest.getPage() < 1 ? 1 : searchRequest.getPage())
+                .size(searchRequest.getSize() < 1 ? 1 : searchRequest.getPage())
                 .sort(convertToKakaoSearchSortType(searchRequest))
                 .build();
     }

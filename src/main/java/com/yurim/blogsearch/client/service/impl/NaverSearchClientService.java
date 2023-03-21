@@ -60,8 +60,8 @@ public class NaverSearchClientService implements SearchClientService {
     private NaverSearchRequest buildNaverSearchRequest(SearchRequest searchRequest) {
         return NaverSearchRequest.builder()
                 .query(searchRequest.getQuery())
-                .start(searchRequest.getPage())
-                .display(searchRequest.getSize())
+                .start(searchRequest.getPage() < 1 ? 1: searchRequest.getPage())
+                .display(searchRequest.getSize() < 1 ? 1 : searchRequest.getSize())
                 .sort(convertToNaverSearchSortType(searchRequest))
                 .build();
     }
