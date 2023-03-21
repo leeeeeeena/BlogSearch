@@ -34,15 +34,6 @@ java -jar BlogSearch-yurim.jar
 
 **Embedded Redis 실행 script로 인해 윈도우 환경에서는 테스트가 어려울 수 있습니다.(리눅스 정상작동 확인)**
 
-</br>
-
-검색 요청/인기검색어 조회시 redis를 사용하거나, 사용하고 싶지 않다면 application.yml의 다음 필드를 변경하여 적용할 수 있습니다.   
-
-```
-infra:
-  enable:
-    redis: false # or true
-```
 
 </br>
 
