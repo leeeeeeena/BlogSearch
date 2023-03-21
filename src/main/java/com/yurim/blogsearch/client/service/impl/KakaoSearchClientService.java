@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.yurim.blogsearch.common.Constants.DEFAULT_REQUEST_PAGE;
+import static com.yurim.blogsearch.common.Constants.DEFAULT_REQUEST_SIZE;
+
 @Service
 @Qualifier("KAKAO")
 @RequiredArgsConstructor
@@ -56,8 +59,8 @@ public class KakaoSearchClientService implements SearchClientService {
     private KakaoSearchRequest buildKakaoSearchRequest(SearchRequest searchRequest) {
         return KakaoSearchRequest.builder()
                 .query(searchRequest.getQuery())
-                .page(searchRequest.getPage() < 1 ? 1 : searchRequest.getPage())
-                .size(searchRequest.getSize() < 1 ? 1 : searchRequest.getPage())
+                .page(searchRequest.getPage() < 1 ? DEFAULT_REQUEST_PAGE : searchRequest.getPage())
+                .size(searchRequest.getSize() < 1 ? DEFAULT_REQUEST_SIZE : searchRequest.getPage())
                 .sort(convertToKakaoSearchSortType(searchRequest))
                 .build();
     }

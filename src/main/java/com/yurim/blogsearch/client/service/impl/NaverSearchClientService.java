@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.yurim.blogsearch.common.Constants.DEFAULT_REQUEST_PAGE;
+import static com.yurim.blogsearch.common.Constants.DEFAULT_REQUEST_SIZE;
+
 @Service
 @Qualifier("NAVER")
 @RequiredArgsConstructor
@@ -60,8 +63,8 @@ public class NaverSearchClientService implements SearchClientService {
     private NaverSearchRequest buildNaverSearchRequest(SearchRequest searchRequest) {
         return NaverSearchRequest.builder()
                 .query(searchRequest.getQuery())
-                .start(searchRequest.getPage() < 1 ? 1: searchRequest.getPage())
-                .display(searchRequest.getSize() < 1 ? 1 : searchRequest.getSize())
+                .start(searchRequest.getPage() < 1 ? DEFAULT_REQUEST_PAGE: searchRequest.getPage())
+                .display(searchRequest.getSize() < 1 ? DEFAULT_REQUEST_SIZE : searchRequest.getSize())
                 .sort(convertToNaverSearchSortType(searchRequest))
                 .build();
     }
