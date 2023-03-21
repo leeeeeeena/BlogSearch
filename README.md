@@ -55,9 +55,11 @@ curl --location 'localhost:9090/v1/search/rank'
 | 분야          | stack            |
 | ------------- | ---------------- |
 | 언어          | Java (zulu 11)   |
-| 프레임워크    | springBoot 2.4.2 |
-| DB            | Redis            |
-| 빌드 툴       | Maven            |
+| 프레임워크    | springBoot 2.7.9 |
+| DB            | h2            |
+| ORM            | JPA           |
+| Cache            | Redis            |
+| 빌드 툴       | Gradle            |
 | API 테스트 툴 | Junit            |
 | IDE           | IntelliJ         |
 
@@ -67,12 +69,11 @@ curl --location 'localhost:9090/v1/search/rank'
 
 | 라이브러리                                                                                                                          | 이유                                                 |
 | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| [WATSAPP](https://github.com/eoqkrskfk94/WATSProject/tree/master/app/src/main/java/com/handong/wats/wheeliric/Convert) KATEC To Geo | 네이버 API 좌표 latitude, longtitude 변환            |
-| org.apache.httpcomponents                                                                                                           | 외부API 연동 호출시 HttpClient 사용                  |
 | Lombok                                                                                                                              | 어노테이션 사용                                      |
 | Spring Web                                                                                                                          | HTTP 요청 API 구현 및 서블릿 환경 사용               |
-| Spring Cloud                                                                                                                        | circuit breaker 구현을 위해 사용                     |
+| Spring Cloud openfeign                                                                                                                      | 외부API 호출 시 Feign 구현을 위해 사용                     |
 | Spring Redis                                                                                                                        | spring framework에서 redis 코드레벨 구현을 위해 사용 |
+| Spring JPA                                                                                                                        | 객체관점에서 쿼리 요청을 위해 사용 |
 
 <br>
 
