@@ -26,6 +26,7 @@ spring:
     port: 6379
 
 
+
 client:
   kakao:
     host: https://dapi.kakao.com
@@ -42,3 +43,4 @@ client:
 infra:
   enable:
     redis: false
+

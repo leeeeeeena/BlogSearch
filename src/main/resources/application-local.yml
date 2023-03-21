@@ -6,3 +6,10 @@ spring:
 infra:
   enable:
     redis: true
+
+
+logging:
+  level:
+    root: WARN
+    com.yurim: DEBUG
+    org.springframework: INFO
