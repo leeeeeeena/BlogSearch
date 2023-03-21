@@ -28,8 +28,6 @@ public enum ResponseCode {
 
     /** 서버 내부 오류 */
     INTERNAL_UNDEFINED_ERROR("5000", "알 수 없는 오류가 발생하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
-    INTERNAL_AUTHENTICATION_ERROR("5001", "허가 되지 않은 요청입니다.", HttpStatus.BAD_REQUEST),
-
     INTERNAL_DB_CONNECTION_FAIL("5100", "DB 연결 실패하였습니다.", HttpStatus.SERVICE_UNAVAILABLE),
     INTERNAL_DB_CONNECTION_TIMEOUT("5101", "DB 연결이 오래 걸립니다.", HttpStatus.SERVICE_UNAVAILABLE),
 
