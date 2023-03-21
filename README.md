@@ -22,7 +22,15 @@
 
 # 테스트 방법
 
-  작성예정
+  1. BlogSearch-yurim.jar을 내려받습니다..   
+  2. 파일이 있는 디렉토리에서 다음 명령어를 실행합니다.
+
+```
+java -jar BlogSearch-yurim.jar
+```
+3. API 요청을 한다. 예시는 아래를 참고하시면 됩니다.
+
+**Embedded Redis 실행 script로 인해 윈도우 환경에서는 테스트가 어려울 수 있습니다.(리눅스 정상작동 확인)**
 
 </br>
 
@@ -73,6 +81,7 @@ curl --location 'localhost:9090/v1/search/rank'
 | Spring Web                                                                                                                          | HTTP 요청 API 구현 및 서블릿 환경 사용               |
 | Spring Cloud openfeign                                                                                                                      | 외부API 호출 시 Feign 구현을 위해 사용                     |
 | Spring Redis                                                                                                                        | spring framework에서 redis 코드레벨 구현을 위해 사용 |
+| it.ozimov:embedded-redis                                                                                                                       | Embedded Redis를 위해  |
 | Spring JPA                                                                                                                        | 객체관점에서 쿼리 요청을 위해 사용 |
 
 <br>
