@@ -34,6 +34,16 @@ java -jar BlogSearch-yurim.jar
 
 </br>
 
+검색 요청/인기검색어 조회시 redis를 사용하거나, 사용하고 싶지 않다면 application.yml의 다음 필드를 변경하여 적용할 수 있습니다.   
+
+```
+infra:
+  enable:
+    redis: false # or true
+```
+
+</br>
+
 ### API 요청 cURL
 
 1. 블로그검색
