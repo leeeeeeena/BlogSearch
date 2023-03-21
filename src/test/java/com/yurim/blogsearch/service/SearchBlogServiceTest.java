@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
-        "infra.enable.redis=false",
         "client.kakao.search-uri=wrong-uri"
 })
 @SpringBootTest

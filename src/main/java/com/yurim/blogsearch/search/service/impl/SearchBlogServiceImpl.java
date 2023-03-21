@@ -12,7 +12,6 @@ import com.yurim.blogsearch.search.repository.SearchHistoryRepository;
 import com.yurim.blogsearch.search.service.SearchBlogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,9 +25,6 @@ public class SearchBlogServiceImpl implements SearchBlogService {
     private final SearchHistoryRepository searchHistoryRepository;
 
     private final SearchCacheRepository searchCacheRepository;
-
-    @Value("${infra.enable.redis}")
-    private boolean useCache;
 
     @Override
     @Transactional
@@ -73,9 +69,7 @@ public class SearchBlogServiceImpl implements SearchBlogService {
 
 
     private void saveSearchQueryInCache(SearchRequest searchRequest) {
-        if (useCache) {
             searchCacheRepository.updateScore(searchRequest);
-        }
     }
 
 
