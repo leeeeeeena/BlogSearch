@@ -24,11 +24,11 @@
 
 # 테스트 방법
 
-  1. BlogSearch-0.0.1-SNAPSHOT.jar을 내려받습니다..   
+  1. Executable 폴더의 BlogSearch-yurim.jar을 내려받습니다..   
   2. 파일이 있는 디렉토리에서 다음 명령어를 실행합니다.
 
 ```
-java -jar BlogSearch-0.0.1-SNAPSHOT.jar
+java -jar BlogSearch-yurim.jar
 ```
 3. API 요청을 한다. 예시는 아래를 참고하시면 됩니다.
 
